@@ -1,0 +1,82 @@
+<p-toast></p-toast>
+<p-panel header="Lista de Tarefas">
+  <br />
+  <span class="p-float-label p-input-icon-left">
+    <i class="pi pi-list"></i>
+    <input
+      id="float-input"
+      type="text"
+      pInputText
+      autofocus
+      pTooltip="Digite aqui a tarefa que deseja incluir!"
+      tooltipPosition="bottom"
+      [(ngModel)]="task.description"
+      (keyup.enter)="addTask()"
+    />
+    <label for="float-input">Digite aqui sua tarefa....</label>
+  </span>
+  <span class="p-buttonset">
+    <button
+      pButton
+      type="button"
+      icon="pi pi-plus"
+      iconPos="left"
+      class="p-button-raised p-button-rounded"
+      pTooltip="nova Tarefa"
+      tooltipPosition="bottom"
+      (click)="renovaTask()"
+    ></button>
+
+    <button
+      pButton
+      type="button"
+      icon="pi pi-trash"
+      iconPos="left"
+      class="p-button-raised p-button-rounded"
+      pTooltip="Remover Tarefa"
+      tooltipPosition="bottom"
+      (click)="delTask()"
+    ></button>
+
+    <button
+      pButton
+      type="button"
+      icon="pi pi-check"
+      iconPos="left"
+      class="p-button-raised p-button-rounded"
+      pTooltip="Concluir tarefa"
+      tooltipPosition="bottom"
+      (click)="taskDone()"
+    ></button>
+  </span>
+  <br />
+  <br />
+
+  <p-table
+    [value]="taskService.items"
+    selectionMode="single"
+    [(selection)]="task"
+    (onRowSelect)="onRowSelect($event)"
+    dataKey="id"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Id da Tarefa</th>
+        <th>Descrição</th>
+        <th>Feito?</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-task>
+      <tr [pSelectableRow]="task">
+        <td bgcolor="silver">{{ task.id }}</td>
+        <td>{{ task.description }}</td>
+        <td>{{ task.done }}</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage" let-columns>
+      <tr>
+        <td>Não há tarefas</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-panel>
